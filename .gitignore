@@ -1,2 +1,4 @@
 myvenv
 project.code-workspace
+mysite/app_blog/__pycache__/
+mysite/mysite/__pycache__/
