@@ -1,39 +1,105 @@
 <!DOCTYPE html>
-<html lang=”uk”>
+<html lang="uk">
+
 <head>
     <title>Blog</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            padding-top: 30px;
+            background-color: #f9f9f9;
+        }
+
+        h1, h4 {
+            color: #343a40;
+        }
+
+        .category-card,
+        .article-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .category-card:hover,
+        .article-card:hover {
+            transform: scale(1.02);
+        }
+
+        .container-image {
+            margin-top: 10px;
+        }
+
+        .btn-all-articles {
+            margin-top: 20px;
+            display: block;
+        }
+
+        .category-link,
+        .article-link {
+            text-decoration: none;
+        }
+
+        .category-link:hover h4,
+        .article-link:hover h4 {
+            text-decoration: underline;
+        }
+
+        .clearfix {
+            margin-top: 20px;
+        }
+    </style>
 </head>
+
 <body>
-Категорії
-{% if categories %}
-{% for item in categories %}
-<div>
-    <a href="{{ item.get_absolute_url }}">
-        <h4>{{ item.category }}</h4>
-       </a>
-</div>
-{% endfor %}
-{% endif %}
-{% if articles %}
-{% for item in articles %}
-<div>
-    <a href="{{ item.get_absolute_url }}">
-        <h4>{{ item.title }}</h4>
-    </a>
-    <h5>
-        {{ item.pub_date|date:"j E Y"|safe|linebreaks }}
-    </h5>
-    <p>
-        {{ item.description|safe|escape|striptags|truncatewords_html:32 }}
-    </p>
-</div>
-{% endfor %}
-{% endif %}
-    <a href="{% url 'articles-list' %}">
-        <h4>Всі публікації</h4>
-    </a>
+    <div class="container">
+        <h1 class="mb-4">Категорії</h1>
 
+        <div class="row">
+            {% if categories %}
+            {% for item in categories %}
+            <div class="col-md-4">
+                <div class="category-card">
+                    <a href="{{ item.get_absolute_url }}" class="category-link">
+                        <h4>{{ item.category }}</h4>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <h1 class="mb-4">Публікації</h1>
+
+        <div class="row">
+            {% if articles %}
+            {% for item in articles %}
+            <div class="col-md-6">
+                <div class="article-card">
+                    <a href="{{ item.get_absolute_url }}" class="article-link">
+                        <h4>{{ item.title }}</h4>
+                    </a>
+                    <h5>{{ item.pub_date|date:"j E Y"|safe|linebreaks }}</h5>
+                    <p>{{ item.description|safe|escape|striptags|truncatewords_html:32 }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <a href="{% url 'articles-list' %}" class="btn btn-primary btn-all-articles">Всі публікації</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</html>
 
+</html>
